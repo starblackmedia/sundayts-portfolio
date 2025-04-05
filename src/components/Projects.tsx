@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -33,7 +34,7 @@ const defaultProjects: Project[] = [
   {
     title: "Starblack Media Academy",
     description: "A modern, responsive portfolio built with Next.js, TypeScript, and Tailwind CSS featuring dark mode and animations.",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS","Firebase", "Paystack"],
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase", "Paystack"],
     githubUrl: "#",
     liveUrl: "#",
     imageUrl: "/images/starblackmedia.JPG",
@@ -87,16 +88,13 @@ export default function Projects({ className, projects = defaultProjects }: Proj
   const [filter, setFilter] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
   
-  // Get all unique tags from projects
   const allTags = Array.from(new Set(projects.flatMap(project => project.tags)));
   
-  // Filter projects based on selected tag and featured status
   const filteredProjects = projects.filter(project => 
     (!filter || project.tags.includes(filter)) && 
     (showAll || project.featured)
   );
 
-  // Extract background pattern colors based on dark mode
   const backgroundPatterns = [
     "bg-blue-500/10 dark:bg-blue-600/10",
     "bg-purple-500/10 dark:bg-purple-600/10",
@@ -209,12 +207,13 @@ export default function Projects({ className, projects = defaultProjects }: Proj
               >
                 <Card className="h-full flex flex-col overflow-hidden border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800 transition-all duration-300 shadow-sm hover:shadow-xl p-0">
                   {project.imageUrl && (
-                    <div className="relative w-full overflow-hidden group">
-                      <img
+                    <div className="relative w-full h-48 overflow-hidden group">
+                      <Image
                         src={project.imageUrl}
                         alt={`Screenshot of ${project.title} project`}
-                        className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
-                        loading="lazy"
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4">
                         <div className="flex gap-2">

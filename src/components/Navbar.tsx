@@ -6,14 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
-import {
-  Home,
-  User,
-  Briefcase,
-  Mail,
-  Menu,
-  X
-} from "lucide-react";
+import { Home, User, Briefcase, Mail, Menu } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -62,7 +55,6 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <ThemeToggle />
             
-            {/* Mobile Menu Button and Sheet */}
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button variant="outline" size="sm" className="md:hidden">

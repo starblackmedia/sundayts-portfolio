@@ -9,14 +9,12 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section className="relative flex flex-col items-center justify-center min-h-[80vh] py-16 px-4 overflow-hidden">
-      {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/20 rounded-full filter blur-3xl dark:bg-purple-600/20" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-500/20 rounded-full filter blur-3xl dark:bg-blue-600/20" />
       </div>
 
       <div className="relative z-10 text-center space-y-6 max-w-3xl mx-auto">
-        {/* Profile Image */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -25,7 +23,7 @@ export default function Hero() {
         >
           <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg mx-auto">
             <Image
-              src="/images/SundayJoseph.JPG" // Update with your image path
+              src="/images/SundayJoseph.JPG"
               alt="SundayTS Profile"
               fill
               className="object-cover"
@@ -34,18 +32,16 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Animated greeting */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <p className="text-lg font-medium text-blue-600 dark:text-blue-400">
-            Hi there, I'm
+            Hi there, I&apos;m
           </p>
         </motion.div>
 
-        {/* Name */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -55,7 +51,6 @@ export default function Hero() {
           SundayTS
         </motion.h1>
 
-        {/* Title */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,7 +60,6 @@ export default function Hero() {
           Full-Stack Developer & Flutter Enthusiast
         </motion.p>
 
-        {/* Description */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -76,7 +70,6 @@ export default function Hero() {
           attention to detail.
         </motion.p>
 
-        {/* CTA Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

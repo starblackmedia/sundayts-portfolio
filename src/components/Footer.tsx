@@ -42,7 +42,6 @@ export default function Footer() {
   return (
     <footer className="border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
       <div className="container mx-auto px-6 py-12">
-        {/* Main Footer Content */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -50,7 +49,6 @@ export default function Footer() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-4 gap-8"
         >
-          {/* Brand Section */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -61,7 +59,7 @@ export default function Footer() {
               Building digital experiences that matter.
             </p>
             <div className="flex space-x-4">
-              {socialLinks.map((link, index) => (
+              {socialLinks.map((link) => (
                 <motion.a
                   key={link.name}
                   href={link.url}
@@ -79,7 +77,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Navigation Links */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Navigation</h3>
             <ul className="space-y-2">
@@ -100,7 +97,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Get in Touch</h3>
             <ul className="space-y-2">
@@ -112,7 +108,6 @@ export default function Footer() {
             </Button>
           </div>
 
-          {/* Newsletter */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Newsletter</h3>
             <p className="text-gray-600 dark:text-gray-400">
@@ -130,7 +125,6 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* Copyright */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -138,9 +132,7 @@ export default function Footer() {
           viewport={{ once: true }}
           className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8 text-center text-gray-500 dark:text-gray-400"
         >
-          <p>
-            © {currentYear} SundayTS. All rights reserved.
-          </p>
+          <p>© {currentYear} SundayTS. All rights reserved.</p>
         </motion.div>
       </div>
     </footer>
