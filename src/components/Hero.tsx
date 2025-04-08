@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Download, Mail, ArrowRight, Code, Sparkles } from "lucide-react";
+import { User, Mail, ArrowRight, Code, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -21,9 +21,9 @@ export default function Hero() {
       {/* Radial gradient overlay */}
       <div className="pointer-events-none absolute inset-0 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
 
-      {/* Original Background elements */}
+      {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Corner accent */}
+        {/* Corner accent gradients */}
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full opacity-10 blur-3xl" />
         <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-emerald-400 to-cyan-500 rounded-full opacity-10 blur-3xl" />
       </div>
@@ -74,9 +74,9 @@ export default function Hero() {
                 </a>
               </Button>
               <Button variant="outline" size="lg" className="rounded-lg border-2" asChild>
-                <a href="/resume.pdf" download>
-                  <Download className="mr-2 h-4 w-4" />
-                  Download CV
+                <a href="/about">
+                  <User className="mr-2 h-4 w-4" />
+                  About
                 </a>
               </Button>
             </div>
@@ -100,10 +100,6 @@ export default function Hero() {
             className="flex-1 flex justify-center md:justify-end"
           >
             <div className="relative">
-              {/* Decorative elements */}
-              <div className="absolute -z-10 inset-0 blur-sm bg-gradient-to-tr from-blue-400/20 to-purple-500/20 rounded-full transform scale-110" />
-              <div className="absolute -z-10 rounded-full w-72 h-72 md:w-80 md:h-80 border-8 border-dashed border-gray-200 dark:border-gray-700 animate-[spin_50s_linear_infinite] opacity-50 transform -translate-x-8 -translate-y-8" />
-              
               {/* Image container */}
               <div className="relative rounded-2xl overflow-hidden w-64 h-64 md:w-72 md:h-72 border-8 border-white dark:border-gray-800 shadow-2xl">
                 <Image
