@@ -1,10 +1,8 @@
-// components/Projects.tsx
 "use client";
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Github, ExternalLink, ArrowRight, Filter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Timeline } from "@/components/ui/timeline";
 
 interface Project {
   title: string;
@@ -23,6 +22,7 @@ interface Project {
   liveUrl?: string;
   imageUrl?: string;
   featured?: boolean;
+  year?: string;
 }
 
 interface ProjectsProps {
@@ -38,7 +38,8 @@ const defaultProjects: Project[] = [
     githubUrl: "#",
     liveUrl: "#",
     imageUrl: "/images/starblackmedia.JPG",
-    featured: true
+    featured: true,
+    year: "2023"
   },
   {
     title: "Gbeduloaded",
@@ -47,7 +48,8 @@ const defaultProjects: Project[] = [
     githubUrl: "#",
     liveUrl: "#",
     imageUrl: "/images/gbedu.JPG",
-    featured: true
+    featured: true,
+    year: "2023"
   },
   {
     title: "Starblack Media",
@@ -56,7 +58,8 @@ const defaultProjects: Project[] = [
     githubUrl: "#",
     liveUrl: "#",
     imageUrl: "/images/starblack-2.JPG",
-    featured: true
+    featured: true,
+    year: "2022"
   },
   {
     title: "Weather Dashboard",
@@ -64,7 +67,8 @@ const defaultProjects: Project[] = [
     tags: ["React", "OpenWeather API", "Leaflet"],
     githubUrl: "#",
     liveUrl: "#",
-    imageUrl: "/images/weather-app.jpg"
+    imageUrl: "/images/weather-app.jpg",
+    year: "2022"
   },
   {
     title: "Recipe Finder",
@@ -72,7 +76,8 @@ const defaultProjects: Project[] = [
     tags: ["Vue.js", "Firebase", "Tailwind CSS"],
     githubUrl: "#",
     liveUrl: "#",
-    imageUrl: "/images/recipe-app.jpg"
+    imageUrl: "/images/recipe-app.jpg",
+    year: "2021"
   },
   {
     title: "Fitness Tracker",
@@ -80,7 +85,8 @@ const defaultProjects: Project[] = [
     tags: ["React Native", "GraphQL", "TypeScript"],
     githubUrl: "#",
     liveUrl: "#",
-    imageUrl: "/images/fitness-app.jpg"
+    imageUrl: "/images/fitness-app.jpg",
+    year: "2021"
   }
 ];
 
@@ -95,39 +101,82 @@ export default function Projects({ className, projects = defaultProjects }: Proj
     (showAll || project.featured)
   );
 
-  const backgroundPatterns = [
-    "bg-blue-500/10 dark:bg-blue-600/10",
-    "bg-purple-500/10 dark:bg-purple-600/10",
-    "bg-pink-500/10 dark:bg-pink-600/10",
-    "bg-indigo-500/10 dark:bg-indigo-600/10"
-  ];
+  // Prepare timeline data
+  const timelineData = filteredProjects.map(project => ({
+    title: project.year || "Other",
+    content: (
+      <div className="p-6 bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800 shadow-sm">
+        <div className="flex items-start gap-4">
+          {project.imageUrl && (
+            <div className="relative w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg">
+              <Image
+                src={project.imageUrl}
+                alt={`Screenshot of ${project.title} project`}
+                fill
+                className="object-cover"
+                sizes="100px"
+              />
+            </div>
+          )}
+          <div className="flex-1">
+            <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+            <p className="text-neutral-600 dark:text-neutral-400 mb-4">{project.description}</p>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.tags.map(tag => (
+                <span 
+                  key={tag} 
+                  className="text-xs px-2 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              {project.githubUrl && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  asChild
+                  className="text-sm"
+                >
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                    <Github className="mr-2 h-4 w-4" />
+                    Code
+                  </a>
+                </Button>
+              )}
+              {project.liveUrl && (
+                <Button 
+                  size="sm" 
+                  asChild
+                  className="text-sm"
+                >
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Live Demo
+                  </a>
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }));
 
   return (
     <section id="projects" className={`${className} py-20 relative overflow-hidden`}>
-      {/* Dynamic Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(4)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0.5 }}
-            animate={{ 
-              opacity: [0.4, 0.6, 0.4],
-              scale: [1, 1.05, 1],
-              x: [0, i % 2 ? 10 : -10, 0],
-              y: [0, i % 3 ? -10 : 10, 0]
-            }}
-            transition={{ 
-              duration: 8 + i * 2, 
-              repeat: Infinity,
-              repeatType: "reverse"
-            }}
-            className={`absolute w-96 h-96 rounded-full filter blur-3xl ${backgroundPatterns[i % backgroundPatterns.length]}`}
-            style={{ 
-              top: `${20 + (i * 20)}%`,
-              left: `${15 + ((i * 25) % 70)}%`,
-            }}
-          />
-        ))}
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-50/30 dark:to-blue-950/20 pointer-events-none" />
+      <div className="absolute inset-0 overflow-hidden">
+        <svg className="absolute left-0 top-0 h-full w-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="dot-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="currentColor" fillOpacity="0.1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dot-pattern)" />
+        </svg>
       </div>
 
       <div className="relative z-10 container mx-auto px-4">
@@ -146,10 +195,10 @@ export default function Projects({ className, projects = defaultProjects }: Proj
             My Work
           </Badge>
           <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Featured Projects
+            Project Timeline
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Here are some of my recent projects. Each one was built to solve specific problems and showcase different skills.
+            A chronological journey through my key projects, showcasing my growth and technical evolution.
           </p>
         </motion.div>
         
@@ -181,7 +230,7 @@ export default function Projects({ className, projects = defaultProjects }: Proj
               {allTags.map(tag => (
                 <DropdownMenuItem 
                   key={tag}
-                  onClick={() => setFilter(tag)}
+                  onClick={() => setFilter(tag === filter ? null : tag)}
                   className={filter === tag ? "bg-blue-50 dark:bg-blue-900/20" : ""}
                 >
                   {tag}
@@ -190,113 +239,9 @@ export default function Projects({ className, projects = defaultProjects }: Proj
             </DropdownMenuContent>
           </DropdownMenu>
         </motion.div>
-        
-        {/* Projects Grid */}
-        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          <AnimatePresence mode="wait">
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                whileHover={{ y: -5 }}
-                className="h-full"
-              >
-                <Card className="h-full flex flex-col overflow-hidden border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800 transition-all duration-300 shadow-sm hover:shadow-xl p-0">
-                  {project.imageUrl && (
-                    <div className="relative w-full h-48 overflow-hidden group">
-                      <Image
-                        src={project.imageUrl}
-                        alt={`Screenshot of ${project.title} project`}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4">
-                        <div className="flex gap-2">
-                          {project.githubUrl && (
-                            <Button 
-                              variant="secondary" 
-                              size="icon"
-                              className="h-8 w-8 rounded-full bg-white/90 hover:bg-white"
-                              asChild
-                            >
-                              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`GitHub repository for ${project.title}`}>
-                                <Github className="h-4 w-4" />
-                              </a>
-                            </Button>
-                          )}
-                          {project.liveUrl && (
-                            <Button 
-                              variant="secondary" 
-                              size="icon"
-                              className="h-8 w-8 rounded-full bg-white/90 hover:bg-white"
-                              asChild
-                            >
-                              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`Live demo for ${project.title}`}>
-                                <ExternalLink className="h-4 w-4" />
-                              </a>
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  <CardHeader className="pt-4">
-                    <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex-grow">
-                    <p className="mb-4 text-gray-600 dark:text-gray-300 line-clamp-3">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <Badge 
-                          key={tag} 
-                          variant="secondary"
-                          className={`hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors cursor-pointer ${
-                            filter === tag ? "bg-blue-200 dark:bg-blue-800" : ""
-                          }`}
-                          onClick={() => setFilter(tag === filter ? null : tag)}
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-between pt-3 pb-4 border-t border-gray-100 dark:border-gray-800 mt-auto">
-                    {project.githubUrl && (
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        asChild
-                        className="hover:shadow-md transition-shadow"
-                      >
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                          <Github className="mr-2 h-4 w-4" />
-                          Code
-                        </a>
-                      </Button>
-                    )}
-                    {project.liveUrl && (
-                      <Button 
-                        size="sm" 
-                        asChild
-                        className="hover:shadow-md transition-shadow bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
-                      >
-                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="mr-2 h-4 w-4" />
-                          Live Demo
-                        </a>
-                      </Button>
-                    )}
-                  </CardFooter>
-                </Card>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+
+        {/* Timeline Component */}
+        <Timeline data={timelineData} />
 
         {/* Toggle Button */}
         <motion.div
